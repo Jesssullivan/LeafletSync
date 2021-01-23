@@ -1,2 +1,2 @@
 # LeafletSync
-Fetch utility for private releases / files for GitHub / BitBucket  
+*a ridiculous fetch utility for private releases / files for GitHub / BitBucket*
