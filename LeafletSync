@@ -40,18 +40,18 @@ USERDEF="<You>"
 
 ## GitHub: release to fetch ##
 REL="v0.0.1"
-RELDEF="<v0.0.1>"
+RELDEF="v0.0.1"
 
 ## GitHub: release archive as type ##
 TYPE="tar.gz"
 
 ## output directory @ remote ##
 OUTDIR="dist/"
-OUTDIRDEF="<dist/>"
+OUTDIRDEF="dist/"
 
 ## GitHub: expanded source directory ##
 EXPANDDIR="./remote__source/"
-EXPANDDIRDEF="<./remote_source/>"
+EXPANDDIRDEF="./remote_source/"
 
 ## GitHub: Your personal api token ##
 TOKEN="personal-api-token"
