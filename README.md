@@ -1,5 +1,3 @@
-# *LeafletSync:*
-
 *A ridiculous utility prompt & CLI for fetching private releases & files from GitHub & BitBucket*
 
 
