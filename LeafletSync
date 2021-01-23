@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-
 ## @Disclaimer
 # this script may or may not be avant-garde ascii art
 # possibly an "it was funnier at the time" sort of deal
@@ -18,10 +17,10 @@
 
 
 NOENV="Nope!"
-ENV_DEFAULT="<Nope!>"
+ENV_DEFAULT="Nope!"
 
 read -p "
-LeafletSync: Do you want to load values from file?
+LeafletSync: Do you want to load values a from file?
 
 If so, enter one now...:[$NOENV]:  " ENV
 ENV=${ENV:-$NOENV}
