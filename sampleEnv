@@ -30,7 +30,5 @@ EXPANDDIRDEF="./remote_source/"
 TOKENDEF="personal-api-token"
 
 ## Host defaults ##
-HOST="GitHub"
 HOSTDEF="GitHub"
-BRANCH="master"
 BRANCHDEF="master"
