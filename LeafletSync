@@ -64,6 +64,7 @@ TOKENDEF="<personal-api-token>"
 
 ## BitBucket: file to fetch ##
 BFILE="<FileInBitBucket>"
+BFILEDEF="<FileInBitBucket>"
 
 ## Remote defaults ##
 HOST="GitHub"
