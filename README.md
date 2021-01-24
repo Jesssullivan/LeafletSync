@@ -2,7 +2,7 @@
 
 
 ```
-wget https://raw.githubusercontent.com/Jesssullivan/LeafletSync/main/LeafletSync && chmod +x LeafletSync && ./LeafletSync
+curl https://raw.githubusercontent.com/Jesssullivan/LeafletSync/main/LeafletSync --output LeafletSync && chmod +x LeafletSync && ./LeafletSync
 ```
 
 - Fetch, unpack, extract releases & output files from a private GitHub repo with an api access token
