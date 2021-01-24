@@ -20,7 +20,7 @@ RELDEF="v0.0.1"
 ## GitHub: release archive as type ##
 TYPE="tar.gz"
 
-## output directory @ remote ##
+## GitHub: output directory @ remote ##
 OUTDIRDEF="dist/"
 
 ## GitHub: expanded source directory ##

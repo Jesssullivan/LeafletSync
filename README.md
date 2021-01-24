@@ -8,7 +8,7 @@ wget https://raw.githubusercontent.com/Jesssullivan/LeafletSync/main/LeafletSync
 - Fetch, unpack, extract releases & output files from a private GitHub repo with an api access token
 - Fetch specific files from a private BitBucket account with user's git authentication
 - Prefill default prompt values with a variety of console flags
-- Save & load default prompt values with a file of environment variables; see template [`sampleEnv`](https://github.com/Jesssullivan/LeafletSync/blob/main/sampleEnv)
+- Save & load default prompt values with a file of environment variables; see template [`sampleEnv`](https://github.com/Jesssullivan/LeafletSync/blob/main/GitHubSampleEnv) & [`BitBucketSampleEnv`]
 
 ```
 ./LeafletSync

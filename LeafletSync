@@ -1,6 +1,10 @@
 #!/bin/bash
 
 
+NOENV="Nope!"
+ENV_DEFAULT="Nope!"
+
+
 ## @Disclaimer
 # this script may or may not be avant-garde ascii art
 # possibly an "it was funnier at the time" sort of deal
@@ -15,16 +19,17 @@
 # @Author Jess Sullivan
 
 
+if [ $# -eq 0 ] ; then
+  read -p "
+  LeafletSync: Do you want to load values a from file?
 
-NOENV="Nope!"
-ENV_DEFAULT="Nope!"
-
-read -p "
-LeafletSync: Do you want to load values a from file?
-
-If so, enter one now...:[$NOENV]:  " ENV
-ENV=${ENV:-$NOENV}
-echo
+  If so, enter one now...:[$NOENV]:  " ENV
+  ENV=${ENV:-$NOENV}
+  echo
+else
+  ENV=$1
+  shift
+fi
 
 ## repo name ##
 REPO="RepoName"
@@ -158,19 +163,19 @@ chintzyDoomText () {
   echo " \                      _____________________/ |             ";
   echo "  \ Fetch from Github: /        α wιρ Σ ♥ |_@__Jess          ";
   echo "  /───────────────────/ "
-  echo "  \ Your API Token    | -t |  --token | Required | = ${TOKEN}"
-  echo "   | Your Handle      | -u |  --user  | Required | = ${USER}"
-  echo "   | Source Repo      | -r |  --repo  \ Required  \ = ${REPO}"
-  echo "   | Repository Owner | -a |  --author \ Required  \ = ${OWNER}"
-  echo "   | Release Version  | -v |  --version | Required | = ${REL}"
-  echo "  / Output Directory  | -o |  --out    / Optional  / = ${OUTDIR}"
+  echo "  \ Your API Token    | -t |  --token | Required | = ${TOKENDEF}"
+  echo "   | Your Handle      | -u |  --user  | Required | = ${USERDEF}"
+  echo "   | Source Repo      | -r |  --repo  \ Required  \ = ${REPODEF}"
+  echo "   | Repository Owner | -a |  --author \ Required  \ = ${OWNERDEF}"
+  echo "   | Release Version  | -v |  --version | Required | = ${RELDEF}"
+  echo "  / Output Directory  | -o |  --out    / Optional  / = ${OUTDIRDEF}"
   echo " /─────────────────────────/"
   echo " \ Fetch from BitBucket:  /                                     "
   echo "  \──────────────────────/                                   "
-  echo "   \  Your Handle       / -bu  /  --b-user  / ~Required | = ${USER}"
-  echo "    \ Your Passhrase   / -bp  / --b-pass   / ~Required / = ${TOKEN}"
-  echo "     \ Source Branch  / -bb  / --b-branch / ~Optional / = ${BRANCH}"
-  echo "      \ Source File  / -bf  / --b-file   / ~Required / = ${BFILE}"
+  echo "   \  Your Handle       / -bu  /  --b-user  / ~Required | = ${USERDEF}"
+  echo "    \ Your Passhrase   / -bp  / --b-pass   / ~Required / = ${TOKENDEF}"
+  echo "     \ Source Branch  / -bb  / --b-branch / ~Optional / = ${BRANCHDEF}"
+  echo "      \ Source File  / -bf  / --b-file   / ~Required / = ${BFILEDEF}"
   echo "       \────────────/ "
   echo;
   }
@@ -213,12 +218,12 @@ fi
 
 if [[ ${HOST} == "BitBucket" ]] ; then
 
-  read -p " Your Passphrase: [$TOKEN]: " TOKEN
-  TOKEN=${TOKEN:-$TOKEN}
+  read -p " Your Passphrase: [$TOKENDEF]: " TOKEN
+  TOKEN=${TOKEN:-$TOKENDEF}
   echo
 
-  read -p " File to Fetch: [$BFILE]: "  BFILE
-  BFILE=${BFILE:-$BFILE}
+  read -p " File to Fetch: [$BFILEDEF]: "  BFILE
+  BFILE=${BFILE:-$BFILEDEF}
   echo
 
   read -p " Source Branch: [$BRANCHDEF]: " BRANCH
@@ -253,7 +258,7 @@ if [[ ${HOST} == "GitHub" ]] ; then
 
 else
 
-  COMMAND=" -O -u $USER:$TOKEN -o ${OUTDIR} https://bitbucket.org/${OWNER}/${REPO}/raw/${BRANCH}/${BFILE}"
+  COMMAND=" -O -u $USER:$TOKEN https://bitbucket.org/${OWNER}/${REPO}/raw/${BRANCH}/${BFILE}"
 
   # let the user know what we're up to:
   echo -e "\n ...fetching file ${FILE} from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"

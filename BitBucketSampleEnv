@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+#################################################
+### save values for later in a file like this ###
+#################################################
+
+## repo name ##
+REPODEF="SaveRepoName"
+
+## Repo Owner ##
+OWNERDEF="<SaveOwnerName>"
+
+## You ##
+USERDEF="<YourName>"
+
+## BitBucket: your password; the one you use to log in ##
+TOKENDEF="<YourPassword>"
+
+## Host defaults ##
+HOSTDEF="BitBucket"
+BRANCHDEF="master"
