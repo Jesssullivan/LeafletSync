@@ -1,14 +1,14 @@
-*A ridiculous [Chindōgu](https://en.wikipedia.org/wiki/Chind%C5%8Dgu) utility prompt & CLI for [fetching private releases & files from GitHub & BitBucket*](https://github.com/Jesssullivan/LeafletSync)
+*A ridiculous* [*Chindōgu*](https://en.wikipedia.org/wiki/Chind%C5%8Dgu) *utility prompt & CLI for* [*fetching private releases & files from GitHub & BitBucket*](https://github.com/Jesssullivan/LeafletSync)
 
 
 ```
 curl https://raw.githubusercontent.com/Jesssullivan/LeafletSync/main/LeafletSync --output LeafletSync && chmod +x LeafletSync && ./LeafletSync
 ```
 
-- Fetch, unpack, extract specific releases & files from a private GitHub repo with an api access token
+- Fetch, unpack, extract specific releases & files or a complete `master` branch from a private GitHub repo with an api access token
 - Fetch and extract specific files or complete branches from a private BitBucket account with user's git authentication
 - Prefill default prompt values with a variety of console flags
-- Save & load default prompt values with a file of environment variables, see templates [`FetchReleasegSampleEnv_GitHub`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchReleasegSampleEnv_GitHub), [`FetchFilegSampleEnv_BitBucket`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchFilegSampleEnv_BitBucket),  [`FetchEverythingSampleEnv_BitBucket`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchEverythingSampleEnv_BitBucket), [`FetchEverythingSampleEnv_GitHub`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchEverythingSampleEnv_GitHub); pass as an argument (`./LeafletSync YourEnvFile`) or provide one on launch.
+- Save & load default prompt values with a file of environment variables, see templates [`FetchReleasegSampleEnv_GitHub`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchReleaseSampleEnv_GitHub), [`FetchFilegSampleEnv_BitBucket`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchFileSampleEnv_BitBucket),  [`FetchEverythingSampleEnv_BitBucket`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchEverythingSampleEnv_BitBucket), [`FetchEverythingSampleEnv_GitHub`](https://github.com/Jesssullivan/LeafletSync/blob/main/FetchEverythingSampleEnv_GitHub); pass as an argument (`./LeafletSync YourEnvFile`) or provide one on launch.
 
 ```
 ./LeafletSync
