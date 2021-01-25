@@ -1,4 +1,4 @@
-*A ridiculous [Chindōgu](https://en.wikipedia.org/wiki/Chind%C5%8Dgu) utility prompt & CLI for fetching private releases & files from GitHub & BitBucket*](https://github.com/Jesssullivan/LeafletSync)*
+*A ridiculous [Chindōgu](https://en.wikipedia.org/wiki/Chind%C5%8Dgu) utility prompt & CLI for [fetching private releases & files from GitHub & BitBucket*](https://github.com/Jesssullivan/LeafletSync)
 
 
 ```
