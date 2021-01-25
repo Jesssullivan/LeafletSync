@@ -5,29 +5,27 @@
 ### save values for later in a file like this ###
 #################################################
 
-## repo name ##
-REPODEF="SaveRepoName"
+## Repo Name ##
+REPODEF=""
 
 ## Repo Owner ##
-OWNERDEF="<SaveOwnerName>"
+OWNERDEF=""
 
 ## You ##
-USERDEF="<YourName>"
+USERDEF=""
 
 ## GitHub: release to fetch ##
-RELDEF="v0.0.1"
+## (comment out if not fetching a release) ##
+# RELDEF="v0.0.1"
 
 ## GitHub: release archive as type ##
-TYPE="tar.gz"
+# TYPE="tar.gz"
 
-## GitHub: output directory @ remote ##
+## Output directory ##
 OUTDIRDEF="dist/"
 
-## GitHub: expanded source directory ##
-EXPANDDIRDEF="./remote_source/"
-
 ## GitHub: Your personal api token ##
-TOKENDEF="personal-api-token"
+TOKENDEF=""
 
 ## Host defaults ##
 HOSTDEF="GitHub"

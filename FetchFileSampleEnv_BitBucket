@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+#################################################
+### save values for later in a file like this ###
+#################################################
+
+BFILEDEF=""
+
+## Repo Name ##
+REPODEF=""
+
+## Repo Owner ##
+OWNERDEF=""
+
+## You ##
+USERDEF=""
+
+## Output directory ##
+OUTDIRDEF="dist/"
+
+## GitHub: Your personal api token ##
+## leave blank if repo is public ##
+TOKENDEF=""
+
+## Host defaults ##
+HOSTDEF="BitBucket"
+BRANCHDEF="master"

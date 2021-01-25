@@ -5,18 +5,22 @@
 ### save values for later in a file like this ###
 #################################################
 
-## repo name ##
-REPODEF="SaveRepoName"
+## Repo Name ##
+REPODEF=""
 
 ## Repo Owner ##
-OWNERDEF="<SaveOwnerName>"
+OWNERDEF=""
 
 ## You ##
-USERDEF="<YourName>"
+USERDEF=""
 
-## BitBucket: your password; the one you use to log in ##
-TOKENDEF="<YourPassword>"
+## Output directory ##
+OUTDIRDEF="dist/"
+
+## BitBucket: Your git password to this repo ##
+TOKENDEF=""
 
 ## Host defaults ##
 HOSTDEF="BitBucket"
 BRANCHDEF="master"
+TYPE="zip"  # BitBucket default is zip for git archive!

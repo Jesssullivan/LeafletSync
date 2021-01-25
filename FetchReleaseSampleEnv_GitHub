@@ -1,0 +1,32 @@
+#!/bin/bash
+
+
+#################################################
+### save values for later in a file like this ###
+#################################################
+
+## Repo Name ##
+REPODEF=""
+
+## Repo Owner ##
+OWNERDEF=""
+
+## You ##
+USERDEF=""
+
+## GitHub: release to fetch ##
+RELDEF="v0.0.1"
+
+## GitHub: release archive as type ##
+TYPE="tar.gz"
+
+## Output directory ##
+OUTDIRDEF="dist/"
+
+## GitHub: Your personal api token ##
+## leave blank if repo is public ##
+TOKENDEF=""
+
+## Host defaults ##
+HOSTDEF="GitHub"
+BRANCHDEF="master"

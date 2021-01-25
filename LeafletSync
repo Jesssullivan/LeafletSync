@@ -43,28 +43,27 @@ OWNERDEF="<TheOwner>"
 USER="You"
 USERDEF="<You>"
 
-## GitHub: release to fetch ##
-REL="v0.0.1"
-RELDEF="v0.0.1"
+## GitHub: release to fetch, i.e. tagged release such as 'v0.0.1' ##
+## (or, just fetch everything)
+REL="Fetch Everything"
+RELDEF="Fetch Everything"
+NOREL="Fetch Everything"
 
 ## GitHub: release archive as type ##
 TYPE="tar.gz"
 
-## output directory @ remote ##
-OUTDIR="dist/"
-OUTDIRDEF="dist/"
-
 ## GitHub: expanded source directory ##
-EXPANDDIR="./remote__source/"
-EXPANDDIRDEF="./remote_source/"
+OUTDIR="./dist/"
+OUTDIRDEF="./dist/"
 
 ## GitHub: Your personal api token ##
 TOKEN="personal-api-token"
 TOKENDEF="<personal-api-token>"
 
-## BitBucket: file to fetch ##
-BFILE="<FileInBitBucket>"
-BFILEDEF="<FileInBitBucket>"
+## BitBucket: file to fetch, or fetch everything ##
+BFILE="<Fetch Everything>"
+BFILEDEF="<Fetch Everything>"
+NOBFILE="<Fetch Everything>"
 
 ## Remote defaults ##
 HOST="GitHub"
@@ -72,6 +71,12 @@ HOSTDEF="GitHub"
 BRANCH="master"
 BRANCHDEF="master"
 
+## archive types ##
+TARDEF="tar.gz"
+ZIPDEF="zip"
+
+
+## If the user passed an environment file argument, use those instead ##
 if ! [[ ${ENV} == ${ENV_DEFAULT} ]] ; then
   source $ENV
 fi
@@ -168,7 +173,7 @@ chintzyDoomText () {
   echo "   | Your Handle      | -u |  --user  | Required | = ${USERDEF}"
   echo "   | Source Repo      | -r |  --repo  \ Required  \ = ${REPODEF}"
   echo "   | Repository Owner | -a |  --author \ Required  \ = ${OWNERDEF}"
-  echo "   | Release Version  | -v |  --version | Required | = ${RELDEF}"
+  echo "   | Release Version  | -v |  --version | Optional | = ${RELDEF}"
   echo "  / Output Directory  | -o |  --out    / Optional  / = ${OUTDIRDEF}"
   echo " /─────────────────────────/"
   echo " \ Fetch from BitBucket:  /                                     "
@@ -176,7 +181,7 @@ chintzyDoomText () {
   echo "   \  Your Handle       / -bu  /  --b-user  / ~Required | = ${USERDEF}"
   echo "    \ Your Passhrase   / -bp  / --b-pass   / ~Required / = ${TOKENDEF}"
   echo "     \ Source Branch  / -bb  / --b-branch / ~Optional / = ${BRANCHDEF}"
-  echo "      \ Source File  / -bf  / --b-file   / ~Required / = ${BFILEDEF}"
+  echo "      \ Source File  / -bf  / --b-file   / ~Optional / = ${BFILEDEF}"
   echo "       \────────────/ "
   echo;
   }
@@ -233,58 +238,90 @@ if [[ ${HOST} == "BitBucket" ]] ; then
 
 fi
 
+# this is where we'll put the expanded source stuff:
+mkdir ${OUTDIR}
+
 # form api call:
 if [[ ${HOST} == "GitHub" ]] ; then
+
+  ## GitHub: check if token is not valid:
+  if ! [[ ${TOKEN} =~ ^[0-9a-z]{40} ]] ; then
+
+    ## GitHub: create a random example token as a sha1 string
+    SHA="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 40 | head -n 1)"
+
+    echo -e "\nFetch from Github:\n"
+    echo "Hmm, ${TOKEN} does not appear to be a valid token;"
+    echo "If you are trying to access a privat repo, please provide a 40 character personal GitHub API token like so:"
+    echo -e "\n./LeafletSync -t ${SHA} ... \n"
+    exit 0
+
+  fi
+
+  # we are dealing with a release:
+  if ! [[ ${REL} == ${NOREL} ]] ; then
 
     ## archive filename ##
     OUTPUT="${REL}.${TYPE}"
 
-  # check if token is not valid:
-  if ! [[ ${TOKEN} =~ ^[0-9a-z]{40} ]] ; then
-    SHA="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 40 | head -n 1)"
-    echo -e "\nFetch from Github:\n"
-    echo "Hmm, ${TOKEN} does not appear to be a valid token!"
-    echo "please provide a 40 character personal GitHub API token like so:"
-    echo -e "\n./LeafletSync -t ${SHA} -u you \n"
-    exit 0
+    COMMAND=" -L -u ${USER}:${TOKEN} --output ${OUTDIR}${OUTPUT} https://codeload.github.com/${OWNER}/${REPO}/${TYPE}/${REL}?token=${TOKEN}"
+
+    # let the user know what we're up to:
+    echo -e "\n ...fetching release ${REL} from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"
+
+  else
+
+    COMMAND=" -L -u $USER:$TOKEN --output ${OUTDIR}remote.zip https://github.com/${OWNER}/${REPO}/archive/master.zip "
+
+    # let the user know what we're up to:
+    echo -e "\n ...fetching everything in ${REPO}'s master from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"
+
   fi
-
-  # this is where we'll put the expanded source stuff:
-  mkdir ${EXPANDDIR}
-
-  COMMAND=" -u $USER:$TOKEN -o ${OUTPUT} https://codeload.github.com/${OWNER}/${REPO}/${TYPE}/${REL}?token=${TOKEN}"
-
-  # let the user know what we're up to:
-  echo -e "\n ...fetching release ${REL} from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"
 
 else
 
-  COMMAND=" -O -u $USER:$TOKEN https://bitbucket.org/${OWNER}/${REPO}/raw/${BRANCH}/${BFILE}"
+  if ! [[ ${BFILE} == ${NOBFILE} ]] ; then
 
-  # let the user know what we're up to:
-  echo -e "\n ...fetching file ${FILE} from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"
+      COMMAND=" -u $USER:$TOKEN --output ${OUTDIR}${BFILE} https://bitbucket.org/${OWNER}/${REPO}/raw/${BRANCH}/${BFILE}"
 
+      # let the user know what we're up to:
+      echo -e "\n ...fetching file ${FILE} from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"
+
+    else # we arn't fetching a specific file, get everything
+
+      COMMAND=" -u $USER:$TOKEN --output ${OUTDIR}remote.zip https://bitbucket.org/${OWNER}/${REPO}/get/master.zip"
+
+      # let the user know what we're up to:
+      echo -e "\n ...fetching everything ${FILE} from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"
+
+  fi
 fi
 
 # execute command, wait inside trap:
 curl ${COMMAND}
-
 wait
 
-if [[ ${HOST} == "GitHub" ]] ; then
+## unpacking ##
 
-  echo -e "\n ...expanding..."
+if [[ ${BFILE} == ${NOBFILE} ]] ; then
 
-  # expand gzipped tar:
-  tar -xvf ${OUTPUT} -C ${EXPANDDIR} --strip-components=1
-  wait
+  # we received a gzipped tarball from GitHub, expand it;
+  # we are dealing with a release:
+  if ! [[ ${REL} == ${NOREL} ]] ; then
 
-  # copy production binary stuff from dist somewhere:
-  cp -rf ${EXPANDDIR}${OUTDIR} ${OUTDIR}
+    echo -e "\n ...expanding gzipped tarball..."
 
-  # move archive out of the way:
-  mv ${OUTPUT} ${EXPANDDIR}
+    # expand gzipped tar:
+    tar -xvf ${OUTDIR}${OUTPUT} -C ${OUTDIR} --strip-components=1
+    wait
+    exit 0
 
+  else
+
+    echo -e "\n ...expanding zip archive..."
+
+    unzip -o ${OUTDIR}"remote" -x ".git" -d ${OUTDIR}
+    wait
+    exit 0
+  fi
 fi
-
-echo -e "\n done! :) \n"
