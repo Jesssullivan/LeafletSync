@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-NOENV="Nope!"
-ENV_DEFAULT="Nope!"
-
-
 ## @Disclaimer
 # this script may or may not be avant-garde ascii art
 # possibly an "it was funnier at the time" sort of deal
@@ -18,18 +14,6 @@ ENV_DEFAULT="Nope!"
 #
 # @Author Jess Sullivan
 
-
-if [ $# -eq 0 ] ; then
-  read -p "
-  LeafletSync: Do you want to load values a from file?
-
-  If so, enter one now...:[$NOENV]:  " ENV
-  ENV=${ENV:-$NOENV}
-  echo
-else
-  ENV=$1
-  shift
-fi
 
 ## repo name ##
 REPO="RepoName"
@@ -53,8 +37,8 @@ NOREL="Fetch Everything"
 TYPE="tar.gz"
 
 ## GitHub: expanded source directory ##
-OUTDIR="."
-OUTDIRDEF="."
+OUTDIR="./"
+OUTDIRDEF="./"
 
 ## GitHub: Your personal api token ##
 TOKEN="personal-api-token"
@@ -75,12 +59,8 @@ BRANCHDEF="master"
 TARDEF="tar.gz"
 ZIPDEF="zip"
 
-
-## If the user passed an environment file argument, use those instead ##
-if ! [[ ${ENV} == ${ENV_DEFAULT} ]] ; then
-  source $ENV
-fi
-
+ENV="Nope!"
+ENV_DEFAULT="Nope!"
 
 ## parse: ##
 
@@ -91,10 +71,14 @@ POSITIONAL=()
 while [[ $# -gt 0 ]] ; do
   key="$1"
   case $key in
+        -e | --env)
+          ENV=$2
+        shift
+        shift
+        ;;
         -t | --token)
         if [ ${TOKEN} == "personal-api-token" ] ; then
           TOKENDEF=$2
-          echo ${TOKEN}
         fi
         shift
         shift
@@ -125,25 +109,24 @@ while [[ $# -gt 0 ]] ; do
         shift
         ;;
         -bu | --b-user)
-          USER=$2
+          USERDEF=$2
           HOSTDEF="BitBucket"
         shift
         shift
         ;;
         -bp | --b-pass)
-          TOKEN=$2
-          TOKENDEF="BitBucket"
+          TOKENDEF=$2
         shift
         shift
         ;;
         -bb | --b-branch)
-          BRANCH=$2
+          BRANCHDEF=$2
           HOSTDEF="BitBucket"
         shift
         shift
         ;;
         -bf | --b-file)
-          BFILE=$2
+          BFILEDEF=$2
           HOSTDEF="BitBucket"
         shift
         shift
@@ -156,7 +139,10 @@ while [[ $# -gt 0 ]] ; do
     esac
 done
 
-## help ##
+## If the user passed an environment file argument, use those instead ##
+if ! [[ ${ENV} == ${ENV_DEFAULT} ]] ; then
+  source $ENV
+fi
 
 ## chintz ##
 chintzyDoomText () {
@@ -185,6 +171,22 @@ chintzyDoomText () {
   echo "       \────────────/ "
   echo;
   }
+
+
+if [ $# -eq 0 ] ; then
+  read -p "
+  ...You may pass a file of values with the \`-e\` flag
+   on launch too, e.g. \` ./LeafletSync -e <EnvFileOfValues> \`
+
+  LeafletSync: Do you want to load values a from file?
+
+  If so, enter one now...:[$ENV_DEFAULT]:  " ENV
+  ENV=${ENV:-$ENV_DEFAULT}
+  echo
+else
+  ENV=$1
+  shift
+fi
 
 
 # heh:
@@ -282,7 +284,7 @@ else
 
   if ! [[ ${BFILE} == ${NOBFILE} ]] ; then
 
-      COMMAND=" -u $USER:$TOKEN --output ${OUTDIR}${BFILE} https://bitbucket.org/${OWNER}/${REPO}/raw/${BRANCH}/${BFILE}"
+      COMMAND=" -O -u $USER:$TOKEN  https://bitbucket.org/${OWNER}/${REPO}/raw/${BRANCH}/${BFILE}"
 
       # let the user know what we're up to:
       echo -e "\n ...fetching file ${FILE} from ${OWNER}/${REPO} with:\n \` ${COMMAND} \`"
