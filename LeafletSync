@@ -240,6 +240,17 @@ if [[ ${HOST} == "BitBucket" ]] ; then
 
 fi
 
+# check if token is empty
+if [[ -z ${TOKEN} ]] ; then
+  echo "LeafletSync:  Token / Passhrase appears to be empty!
+
+  Please provide one; this tool only works for private repositories...
+
+  ...Exiting.
+  "
+  exit 0
+fi
+
 # this is where we'll put the expanded source stuff:
 mkdir ${OUTDIR}
 
@@ -254,7 +265,7 @@ if [[ ${HOST} == "GitHub" ]] ; then
 
     echo -e "\nFetch from Github:\n"
     echo "Hmm, ${TOKEN} does not appear to be a valid token;"
-    echo "If you are trying to access a privat repo, please provide a 40 character personal GitHub API token like so:"
+    echo "If you are trying to access a private GitHub repo, please provide a 40 character personal GitHub API token like so:"
     echo -e "\n./LeafletSync -t ${SHA} ... \n"
     exit 0
 
