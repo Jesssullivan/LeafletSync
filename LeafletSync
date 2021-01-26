@@ -53,8 +53,8 @@ NOREL="Fetch Everything"
 TYPE="tar.gz"
 
 ## GitHub: expanded source directory ##
-OUTDIR="./dist/"
-OUTDIRDEF="./dist/"
+OUTDIR="."
+OUTDIRDEF="."
 
 ## GitHub: Your personal api token ##
 TOKEN="personal-api-token"
